@@ -1,0 +1,7 @@
+{
+    "ClientId" : "1008512522069-jkic3ditc4grsmjlk4km6g33nlcj8rq4.apps.googleusercontent.com",
+    "ClientSecret" : "ojfUwdts9Oab7gz-BFFuuIBR",
+    "RedirectionUrl" : "http://localhost:4000/oauthCallback",
+    "DatabaseUrl": "mongodb://localhost:27017",
+    "DatabaseName": "myproject"
+}

@@ -1,0 +1,112 @@
+<link href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<!-- <script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script> -->
+<script src="//code.jquery.com/jquery-2.1.3.min.js"></script>
+<link rel="stylesheet/css" href="./css/register.css">
+
+<body>
+    <script>
+        $(document).ready(function(){
+            var useremail = "<%=email%>";
+            $('#email').val(useremail);
+            $('form').submit(function(e){
+                e.preventDefault();
+                console.log('submits')
+                var name = $('#name').val();
+                var phno = $('#phoneNumber').val();
+                var address = $('#address').val();
+                if(phno.length != 10) {
+                    alert('please insert proper contact no.');
+                    $('#phoneNumber').focus();
+                    return false;
+                }
+                var skill1 = $('#skill1').val() || "";
+                var skill2 = $('#skill2').val() || "";
+                var skill3 = $('#skill3').val() || "";
+                var skill4 = $('#skill4').val() || "";
+                var skillstr = "";
+                for (let index = 1; index < 5 ; index++) {
+                    if(eval('skill'+index)) {
+                        skillstr += eval('skill'+index) + "-";
+                    }
+                }
+                skillstr = skillstr.slice(0,-1);
+                var registerdata = {
+                    name: name,
+                    email: useremail,
+                    phno: phno,
+                    address: address,
+                    skills: skillstr
+                }
+                $.ajax({
+                    type: "POST",
+                    url: "/register",
+                    data: registerdata,
+                    success: function(data){
+                        $('#name').val("");
+                        $('#email').val("");
+                        $('#phoneNumber').val("");
+                        $('#address').val("");
+                        $('#skill1').val("")
+                        $('#skill2').val("")
+                        $('#skill3').val("")
+                        $('#skill4').val("")
+                        alert('done');
+                        window.location.href = '/finale';
+                    }
+                });
+            });
+        })
+    </script>
+
+    <div class="container">
+        <form class="form-horizontal">
+            <div class="form-group" style="display: inline-flex;">
+
+                <h2 class="col-sm-offset-8">Registration</h2>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-9 col-sm-offset-3">
+                    <span class="help-block">*Required fields</span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="name" class="col-sm-3 control-label">Full Name*</label>
+                <div class="col-sm-9">
+                    <input type="text" id="name" placeholder="Full Name" class="form-control" autofocus required>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="email" class="col-sm-3 control-label">Email*</label>
+                <div class="col-sm-9">
+                    <input type="email" id="email" placeholder="Email" class="form-control" disabled required>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="phoneNumber" class="col-sm-3 control-label">Phone Number* </label>
+                <div class="col-sm-9">
+                    <input type="number" id="phoneNumber" placeholder="Phone number" class="form-control" min="0" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="address" class="col-sm-3 control-label">Address*</label>
+                <div class="col-sm-9">
+                    <input type="text" id="address" placeholder="Address" class="form-control" autofocus required>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="skill" class="col-sm-3 control-label">Skills</label>
+                <div class="col-sm-2">
+                    <input type="text" id="skill1" placeholder="Skill" class="form-control">
+                    <input type="text" id="skill2" placeholder="Skill" class="form-control">
+                    <input type="text" id="skill3" placeholder="Skill" class="form-control">
+                    <input type="text" id="skill4" placeholder="Skill" class="form-control">
+                </div>
+            </div>
+            
+            <button type="submit" class="btn btn-primary btn-block">Register</button>
+        </form>
+    </div>
+
+</body>
